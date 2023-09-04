@@ -7,59 +7,111 @@ use Illuminate\Http\Request;
 
 class ReceiptController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return View('admin.receipts.index')
+            ->with('receipts', Receipt::orderBy('created_at', 'desc')->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.receipts.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'name' => 'required',
+            'lastname' => 'required',
+            'email' => 'required',
+            'company' => 'required',
+            'phone' => 'required',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to('new-tenant/')
+                ->withErrors($validator)
+                ->withInput($request->except('password'));
+        } else {
+            if (Auth::user()->role == 'dev' || Auth::user()->role == 'admin') {
+                $user = new Receipt();
+                $user->name = $request->get('name');
+                $user->lastname = $request->get('lastname');
+                $user->email = $request->get('email');
+                $user->company = $request->get('company');
+                $user->phone = $request->get('phone');
+                $user->role = 'seller';
+                $user->password = bcrypt(str::random(10));
+                $user->save();
+                flash()->success('Receipt Added Successfully');
+                return back();
+            } else {
+                flash()->error('Add Receipt fail!, Duplicate email or Invalid credentials');
+                return back();
+            }
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Receipt $receipt)
+    public function show($id)
     {
-        //
+        $receipt = Receipt::where('id', $id)->first();
+        if ($receipt) {
+            return view('admin.receipts.read')->with('receipts', Receipt::where('id', $receipt->id)->orderBy('created_at', 'desc'));
+        } else {
+            return view('admin.receipts.read');
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Receipt $receipt)
+    public function edit($id)
     {
-        //
+        $receipts = Receipt::find($id);
+        return view('admin.receipts.edit')->with('receipts', Receipt::where('id', $id)->get());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Receipt $receipt)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = array(
+            'name' => 'required',
+            'lastname' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'company' => 'required',
+            'password' => 'required',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to('edit-tenant/' . $id)
+                ->withErrors($validator)
+                ->withInput($request->except('password'));
+        } else {
+            $user = Receipt::findOrFail($id);
+            if (Auth::user()->role == 'dev' || Auth::user()->role == 'admin') {
+                $user->name = $request->get('name');
+                $user->lastname = $request->get('lastname');
+                $user->email = $request->get('email');
+                $user->phone = $request->get('phone');
+                $user->company = $request->get('company');
+                $user->role = 'seller';
+                $password = $request->get('password');
+                $confirm_password = $request->get('password_confirmation');
+                if ($password != $confirm_password) {
+                    flash()->error('Passwords Dont Match! Check passwords and try again');
+                    return back();
+                } else {
+                    $user->password = bcrypt($request->get('password'));
+                }
+                $user->save();
+                flash()->success('Update Successful');
+                return back();
+            }
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Receipt $receipt)
+    public function destroy($id)
     {
-        //
+        $receipt = Receipt::where('id', $id)->first();
+        $receipt->delete();
+        flash()->success('Receipt Deleted Successfully');
+        return back();
     }
 }

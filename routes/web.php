@@ -28,7 +28,7 @@ use App\Http\Controllers\PaymentController;
 //     return view('welcome');
 // });
 
-Auth::routes();
+// Auth::routes();
 Route::redirect('/', 'admin-dash', 301);
 Route::redirect('home', 'admin-dash', 301);
 
