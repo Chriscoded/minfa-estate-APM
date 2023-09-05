@@ -9,6 +9,10 @@ use App\Models\Vehicle;
 use App\Http\Controllers\Controller;
 use App\Models\Tenant;
 use App\Models\Unit;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 
 class AdminController extends Controller
@@ -20,8 +24,10 @@ class AdminController extends Controller
 
     public function index(Request $request)
     {
-        $user = $request->user()->role;
+        // $user = $request->user()->role;
 
+        // dd(Auth::user());
+        $user = Auth::user()->hasRole('admin');
         switch ($user) {
             case 'admin':
                 return view('admin.index')
@@ -31,8 +37,15 @@ class AdminController extends Controller
                     ->with('units', Unit::orderBy('created_at', 'desc')->get());
                 break;
             default:
-                flash()->error('User Does Not Exist!');
-                return back();
+                // flash()->error('User Does Not Exist!');
+
+                // return back();
+
+
+                // // Session::flash('error', "'User Does Not Exist!");
+                // Session::flash('type', "error");
+                // Session::flash("title", "Account Number Error");
+                return back()->with(['error' => 'User Does Not Exist!'], 422);
                 break;
         }
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Invoice;
+use App\Models\Unit;
 use App\Models\WaterReading;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;

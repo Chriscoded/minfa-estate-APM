@@ -13,7 +13,17 @@ return new class extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tenant_id')->nullable();
+            $table->string('unit_no');
+            $table->string('unit_type');
+            $table->string('floor')->nullable();
+            $table->string('block')->nullable();
+            $table->string('rent');
+            $table->string('paid')->nullable();
+            $table->string('balance')->nullable();
             $table->timestamps();
+
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
         });
     }
 

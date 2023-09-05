@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>
-			HAO
+			Minfa-Estate
 		</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -66,7 +66,7 @@
 							<div class="m-stack m-stack--ver m-stack--general" >
 								<div class="m-stack__item m-stack__item--middle m-brand__logo" >
 									<a class="m-brand__logo-wrapper text" style="color:white;margin:0 0 0 40px !important; ">
-										<h5 > HAO  </h5>
+										<h5 > Minfa Estate  </h5>
 									</a>
 								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools" >
@@ -97,7 +97,7 @@
 												<span class="m-menu__link-wrap">
 													<span class="m-menu__link-text">
                                                         <div class="alert" style="margin: 0 0 0 300px; padding: 0 0 0 0;">
-                                                            @include('flash::message')
+                                                            {{-- @include('flash::message') --}}
 
                                                         </div>
 													</span>
