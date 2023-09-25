@@ -89,6 +89,11 @@
                                     </div>
                                 </div>
                             </div>
+                            @if ( session()->has('type') )
+                            {{-- {{ Session::get('success') }}
+                            {{ Session::get('type') }}
+                            {{ Session::get('title') }} --}}
+                            @endif
                         </div>
                     </form>
                     <!--end::Form-->

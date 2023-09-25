@@ -7,6 +7,7 @@ use App\Models\Unit;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 class UnitController extends Controller
 {
@@ -24,7 +25,8 @@ class UnitController extends Controller
 
     public function store(Request $request)
     {
-
+        // logger($request);
+        // return back()->with(['type' => 'success','title' => 'Success','message' => 'Unit Registered Successfully'], 200);
         $validator = Validator::make($request->all(), [
             'unit_no' => 'required',
             'unit_type' => 'required',
@@ -34,11 +36,16 @@ class UnitController extends Controller
         ]);
 
         if ($validator->fails()) {
+            // logger("failed validation");
+
             return redirect('new-unit/')
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            if (Auth::user()->role == 'dev' || Auth::user()->role == 'admin') {
+            // logger("passed validation");
+            // if (Auth::user()->role == 'dev' || Auth::user()->role == 'admin') {
+            if (Auth::user()->hasAnyRole(['admin', 'dev'])) {
+                // logger("User role is dev or admin");
                 $unit = new Unit();
                 $unit->unit_no = $request->get('unit_no');
                 $unit->unit_type = $request->get('unit_type');
@@ -46,11 +53,13 @@ class UnitController extends Controller
                 $unit->floor = $request->get('floor');
                 $unit->rent = $request->get('rent');
                 $unit->save();
-                flash()->success('Unit Registered Successfully');
-                return back();
+
+                // logger("saved" . $unit);
+                // flash()->success('Unit Registered Successfully');
+                return back()->with(['type' => 'success','title' => 'Success','message' => 'Unit Registered Successfully'], 200);
             } else {
-                flash()->error('Add unit fail!, Duplicate email or Invalid credentials');
-                return back();
+                // flash()->error('Add unit fail!, Duplicate email or Invalid credentials');
+                return back()->with(['type' => 'error','title' => 'Error','message' => 'Add unit fail!, Duplicate email or Invalid credentials'], 422);
             }
         }
     }
@@ -94,11 +103,13 @@ class UnitController extends Controller
                 $unit->floor = $request->get('floor');
                 $unit->rent = $request->get('rent');
                 $unit->save();
-                flash()->success('Unit Registered Successfully');
-                return back();
+                // back()->with(['error' => 'User Does Not Exist!'], 422);
+                // flash()->success('Unit Registered Successfully');
+                return back()->with(['type' => 'success','title' => 'Success','message' =>  'Unit Registered Successfully'], 200);
             } else {
-                flash()->error('Add unit fail!, Duplicate email or Invalid credentials');
-                return back();
+                // flash()->error('Add unit fail!, Duplicate email or Invalid credentials');
+
+                return back()->with(['type' => 'success','title' => 'Success','message' =>  'Unit Registered Successfully'], 422);
             }
         }
     }
@@ -107,7 +118,7 @@ class UnitController extends Controller
     {
         $unit = Unit::where('id', $id)->first();
         $unit->delete();
-        flash()->success('Unit Deleted Successfully');
-        return back();
+        // flash()->success('Unit Deleted Successfully');
+        return back()->with(['success' => 'Unit Deleted Successfully'], 200);
     }
 }

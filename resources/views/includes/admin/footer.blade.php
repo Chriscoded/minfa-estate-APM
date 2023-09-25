@@ -9,6 +9,8 @@
 		<div id="m_scroll_top" class="m-scroll-top">
 			<i class="la la-arrow-up"></i>
 		</div>
+        {{-- @stack('js') --}}
+
 		<script>
 			$('.carousel').carousel({
 				pause: "false"
@@ -93,6 +95,23 @@
         <script src="../admin/assets/app/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="../admin/assets/demo/default/custom/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
 
+        <script src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>
+        <script src="{{ asset('js/popper.min.js') }}"></script>
+        <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+
+        @if (session()->has('type'))
+        <script type="text/javascript">
+        // alert('hi');
+            swal({
+                title: "{{ session()->get('title') }}",
+                icon: ("{{ session()->get('type') }}" == 'success') ? "success" : "error",
+                text: "{{ session()->get('message') }}",
+                timer: 3000
+            }).then((value) => {
+                window.location.assign("/all-units");
+            });
+        </script>
+    @endif
 	</body>
 	<!-- end::Body -->
 </html>

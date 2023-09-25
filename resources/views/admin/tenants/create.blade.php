@@ -47,10 +47,10 @@
                                 <div class="col-lg-4">
                                         <label class="">Unit No:</label>
                                         <select class="form-control m-input" name="unit_no" required>
+                                            <option selected disabled>
+                                                Select Unit
+                                            </option>
                                             @foreach ($units as $unit)
-                                                <option selected>
-                                                    Select Unit
-                                                </option>
                                                 <option value="{{ $unit->unit_no }}">
                                                     {{ $unit->unit_no }}
                                                 </option>
