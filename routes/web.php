@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TenantController;
-use App\Http\Controllers\UnitController;
+use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\WaterReadingController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\InvoiceController;
@@ -46,7 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/update-user/{id}', [UserController::class, 'update']);
     Route::get('/delete-user/{id}', [UserController::class, 'destroy']);
 
-    //Tenants ROUTES (ADMIN) DEEEEEEVVVVVVVVVVVVVVVVVVEEEEELOPER
+    //Tenants ROUTES (ADMIN)
     Route::get('all-tenants', [TenantController::class, 'index']);
     Route::get('new-tenant', [TenantController::class, 'create']);
     Route::post('new-tenant', [TenantController::class, 'store']);
@@ -55,14 +56,23 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/update-tenant/{id}', [TenantController::class, 'update']);
     Route::get('/delete-tenant/{id}', [TenantController::class, 'destroy']);
 
-    //Units ROUTES (User) DEEEEEEVVVVVVVVVVVVVVVVVVEEEEELOPER
-    Route::get('all-units', [UnitController::class, 'index']);
-    Route::get('new-unit', [UnitController::class, 'create']);
-    Route::post('new-unit', [UnitController::class, 'store']);
-    Route::get('show-unit/{id}', [UnitController::class, 'show']);
-    Route::get('/edit-unit/{id}', [UnitController::class, 'edit']);
-    Route::post('/update-unit/{id}', [UnitController::class, 'update']);
-    Route::get('/delete-unit/{id}', [UnitController::class, 'destroy']);
+     //Building ROUTES (User)
+     Route::get('all-buildings', [BuildingController::class, 'index']);
+     Route::get('new-building', [BuildingController::class, 'create']);
+     Route::post('new-building', [BuildingController::class, 'store']);
+     Route::get('show-building/{id}', [BuildingController::class, 'show']);
+     Route::get('/edit-building/{id}', [BuildingController::class, 'edit']);
+     Route::post('/update-building/{id}', [BuildingController::class, 'update']);
+     Route::get('/delete-building/{id}', [BuildingController::class, 'destroy']);
+
+    //Apartments ROUTES (User)
+    Route::get('all-apartments', [ApartmentController::class, 'index']);
+    Route::get('new-apartment', [ApartmentController::class, 'create']);
+    Route::post('new-apartment', [ApartmentController::class, 'store']);
+    Route::get('show-apartment/{id}', [ApartmentController::class, 'show']);
+    Route::get('/edit-apartment/{id}', [ApartmentController::class, 'edit']);
+    Route::post('/update-apartment/{id}', [ApartmentController::class, 'update']);
+    Route::get('/delete-apartment/{id}', [ApartmentController::class, 'destroy']);
 
     //VEHICLES ROUTES (User) DEEEEEEVVVVVVVVVVVVVVVVVVEEEEELOPER
     Route::get('all-vehicles', [VehicleController::class, 'index']);

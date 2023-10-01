@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     public function index()
@@ -16,7 +17,9 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::all();
+        // dd($roles);
+        return view('admin.users.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -37,14 +40,21 @@ class UserController extends Controller
                 $user = new User();
                 $user->name = $request->get('name');
                 $user->email = $request->get('email');
-                $user->role = $request->get('role');
+                // $user->role = $request->get('role');
                 $user->password = bcrypt($request->get('password'));
                 $user->save();
-                flash()->success('User Registered Successfully');
-                return back();
+
+                $role = Role::find($request->get('role'));
+
+                $user->assignRole($role->name);
+
+                // Session::flash('success', 'User Registered Successfully');
+                // return back();
+                return back()->with(['type' => 'success','title' => 'Success','message' =>  'User Registered Successfully'], 200);
             } else {
-                flash()->error('Add user fail!, Duplicate email or Invalid credentials');
-                return back();
+                // flash()->error('Add user fail!, Duplicate email or Invalid credentials');
+                // return back();
+                return back()->with(['type' => 'error','title' => 'Error','message' =>  'Add user fail!, Duplicate email or Invalid credentials'], 422);
             }
         }
     }
@@ -86,11 +96,13 @@ class UserController extends Controller
                 $user->role = $request->get('role');
                 $user->password = bcrypt($request->get('password'));
                 $user->save();
-                flash()->success('User Registered Successfully');
-                return back();
+                // flash()->success('User Registered Successfully');
+                // return back();
+                return back()->with(['type' => 'success','title' => 'Success','message' =>  'User Registered Successfully'], 200);
             } else {
-                flash()->error('Add user fail!, Duplicate email or Invalid credentials');
-                return back();
+                // flash()->error('Add user fail!, Duplicate email or Invalid credentials');
+                // return back();
+                return back()->with(['type' => 'error','title' => 'Error','message' =>  'Add user fail!, Duplicate email or Invalid credentials'], 422);
             }
         }
     }
@@ -99,8 +111,9 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
         $user->delete();
-        flash()->success('User Deleted Successfully');
-        return back();
+        // flash()->success('User Deleted Successfully');
+        // return back();
+        return back()->with(['type' => 'success','title' => 'Success','message' =>  'User Deleted Successfully'], 200);
     }
 
 }

@@ -108,7 +108,8 @@
                 text: "{{ session()->get('message') }}",
                 timer: 3000
             }).then((value) => {
-                window.location.assign("/all-units");
+                // window.location.assign("/all-units");
+                window.location.reload();
             });
         </script>
     @endif

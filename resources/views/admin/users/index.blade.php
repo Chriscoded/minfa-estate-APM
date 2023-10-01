@@ -84,7 +84,12 @@
                                         </div>
                                     </td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role }}</td>
+                                    <td>
+                                        @foreach ($user->getRoleNames() as $role )
+                                           {{ $role }}
+                                        @endforeach
+                                        <br>
+                                    </td>
                                     <td>
                                         {{-- <a href="{{ url('show-user/'.$user->id) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View ">
                                             <i class="fa fa-eye"></i>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('water_readings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('unit_id')->nullable();
+            $table->unsignedBigInteger('apartment_id')->nullable();
             $table->string('current_readings');
             $table->string('previous_readings');
             $table->string('rate');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('month');
             $table->timestamps();
 
-            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
         });
     }
 

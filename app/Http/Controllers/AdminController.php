@@ -8,7 +8,8 @@ use App\Models\User;
 use App\Models\Vehicle;
 use App\Http\Controllers\Controller;
 use App\Models\Tenant;
-use App\Models\Unit;
+use App\Models\Apartment;
+use App\Models\Building;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,7 +35,8 @@ class AdminController extends Controller
                     ->with('users', User::orderBy('created_at', 'desc')->get())
                     ->with('vehicles', Vehicle::orderBy('created_at', 'desc')->get())
                     ->with('tenants', Tenant::orderBy('created_at', 'desc')->get())
-                    ->with('units', Unit::orderBy('created_at', 'desc')->get());
+                    ->with('apartments', Apartment::orderBy('created_at', 'desc')->get())
+                    ->with('buildings', Building::orderBy('created_at', 'desc')->get());
                 break;
             default:
                 // flash()->error('User Does Not Exist!');

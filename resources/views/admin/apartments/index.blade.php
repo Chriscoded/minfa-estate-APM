@@ -17,7 +17,7 @@
                 <div class="m-portlet__head-caption">
                     <div class="m-portlet__head-title">
                         <h3 class="m-portlet__head-text">
-                            Units
+                            Apartments
                         </h3>
                     </div>
                 </div>
@@ -25,10 +25,10 @@
 					<ul class="m-portlet__nav">
 						@if(Auth::user()->hasRole('admin'))
 							<li class="m-portlet__nav-item">
-								<a href="{{ url('new-unit') }}" class="btn btn-primary m-btn  m-btn--custom m-btn--icon m-btn--air">
+								<a href="{{ url('new-apartment') }}" class="btn btn-primary m-btn  m-btn--custom m-btn--icon m-btn--air">
 									<span>
 										<i class="fa fa-wrench"></i>
-										<span>New Unit</span>
+										<span>New Apartment</span>
 									</span>
 								</a>
 							</li>
@@ -63,10 +63,10 @@
 						@if(Auth::user()->hasRole('admin'))
 							<tr>
 								<th>Tenant</th>
-								<th>Unit No</th>
-                                <th>Unit Type</th>
+								<th>Apartment No</th>
+                                <th>Apartment Type</th>
                                 <th>Rent</th>
-								<th>Block</th>
+								<th>Building</th>
 								<th>Floor</th>
 								<th>Action</th>
 							</tr>
@@ -78,24 +78,24 @@
 					</thead>
 					<tbody>
 						    @if(Auth::user()->hasRole('admin'))
-								@foreach($units as $unit)
+								@foreach($apartments as $apartment)
 									<tr>
 										<td>
                                             @foreach ($tenants as $tenant)
                                                 {{ $tenant->name }} {{ $tenant->lastname }}
                                             @endforeach
                                         </td>
-										<td>{{ $unit->unit_no }}</td>
-										<td>{{ $unit->unit_type }}</td>
-                                        <td>{{ $unit->rent }}</td>
-                                        <td>{{ $unit->block }}</td>
-										<td>{{ $unit->floor }}</td>
+										<td>{{ $apartment->apartment_no }}</td>
+										<td>{{ $apartment->apartment_type }}</td>
+                                        <td>{{ $apartment->rent }}</td>
+                                        <td>{{ $apartment->building->building_name }}</td>
+										<td>{{ $apartment->floor }}</td>
 
 										<td>
-											<a href="{{ url('edit-unit/'.$unit->id) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit ">
+											<a href="{{ url('edit-apartment/'.$apartment->id) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit ">
 												<i class="fa fa-edit"></i>
 											</a>
-											<a href="{{ url('delete-unit/'.$unit->id) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit ">
+											<a href="{{ url('delete-apartment/'.$apartment->id) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit ">
 												<i class="fa fa-trash"></i>
 											</a>
 										</td>

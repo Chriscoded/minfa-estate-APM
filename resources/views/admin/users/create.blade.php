@@ -46,6 +46,15 @@
                                 <div class="col-lg-4">
                                         <label class="">Role:</label>
                                         <select class="form-control m-input" name="role" required>
+                                            <option value="" disabled selected hidden aria-disabled="true">
+                                                select role
+                                            </option>
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        {{-- <select class="form-control m-input" name="role" required>
                                             <option hidden>
                                                 Select Role
                                             </option>
@@ -55,7 +64,7 @@
                                             <option value="staff">
                                                 Staff
                                             </option>
-                                        </select>
+                                        </select> --}}
                                     </div>
                             </div>
                         </div>

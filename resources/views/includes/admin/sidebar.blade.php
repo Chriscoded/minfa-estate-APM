@@ -361,12 +361,12 @@
 								</ul>
 							</div>
                         </li>
-
+                        {{-- buildings --}}
                         <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">
 							<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 								<i class="m-menu__link-icon fa fa-home"></i>
 								<span class="m-menu__link-text">
-									Units
+									Buildings
 								</span>
 								<i class="m-menu__ver-arrow la la-angle-right"></i>
 							</a>
@@ -376,22 +376,64 @@
 									<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
 										<span class="m-menu__link">
 											<span class="m-menu__link-text">
-												Units
+												Buildings
 											</span>
 										</span>
 									</li>
 									<li class="m-menu__item " aria-haspopup="true" >
-										<a  href="{{ url('/all-units') }}" class="m-menu__link ">
+										<a  href="{{ url('/all-buildings') }}" class="m-menu__link ">
 											<i class="m-menu__link-bullet m-menu__link-bullet--dot">
 												<span></span>
 											</i>
 											<span class="m-menu__link-text">
-												All Units
+												All Buildings
 											</span>
 										</a>
 									</li>
 									<li class="m-menu__item " aria-haspopup="true" >
-										<a  href="{{ url('/new-unit') }}" class="m-menu__link ">
+										<a  href="{{ url('/new-building') }}" class="m-menu__link ">
+											<i class="m-menu__link-bullet m-menu__link-bullet--dot">
+												<span></span>
+											</i>
+											<span class="m-menu__link-text">
+												Add New
+											</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+                        {{-- buildings --}}
+                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+							<a  href="javascript:;" class="m-menu__link m-menu__toggle">
+								<i class="m-menu__link-icon fa fa-home"></i>
+								<span class="m-menu__link-text">
+									Apartment
+								</span>
+								<i class="m-menu__ver-arrow la la-angle-right"></i>
+							</a>
+							<div class="m-menu__submenu ">
+								<span class="m-menu__arrow"></span>
+								<ul class="m-menu__subnav">
+									<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
+										<span class="m-menu__link">
+											<span class="m-menu__link-text">
+												Apartments
+											</span>
+										</span>
+									</li>
+									<li class="m-menu__item " aria-haspopup="true" >
+										<a  href="{{ url('/all-apartments') }}" class="m-menu__link ">
+											<i class="m-menu__link-bullet m-menu__link-bullet--dot">
+												<span></span>
+											</i>
+											<span class="m-menu__link-text">
+												All Apartments
+											</span>
+										</a>
+									</li>
+									<li class="m-menu__item " aria-haspopup="true" >
+										<a  href="{{ url('/new-apartment') }}" class="m-menu__link ">
 											<i class="m-menu__link-bullet m-menu__link-bullet--dot">
 												<span></span>
 											</i>
@@ -447,7 +489,9 @@
 						</li>
 
 
-						<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+
+
+						{{-- <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">
 							<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 								<i class="m-menu__link-icon fa fa-car"></i>
 								<span class="m-menu__link-text">
@@ -571,7 +615,7 @@
 									</li>
 								</ul>
 							</div>
-                        </li>
+                        </li> --}}
 
 
                         <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">
@@ -660,6 +704,16 @@
 							</div>
 						</li>
 
+                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+							<a  href="javascript:;" class="m-menu__link m-menu__toggle">
+								<i class="m-menu__link-icon flaticon-users"></i>
+								<span class="m-menu__link-text">
+									Complains
+								</span>
+								<i class="m-menu__ver-arrow la la-angle-right"></i>
+							</a>
+                        </li>
+
 						<li class="m-menu__section ">
 							<h4 class="m-menu__section-text">
 								Settings
@@ -681,6 +735,8 @@
 								{{ csrf_field() }}
 							</form>
 						</li>
+
+
 					</ul>
 				</div>
 				<!-- END: Aside Menu -->

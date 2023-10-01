@@ -43,4 +43,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // public function roles()
+    // {
+    //     return $this->hasManyThrough('App\Role', 'App\UserRole', 'user_id', 'id', 'id', 'role_id');
+    // }
 }

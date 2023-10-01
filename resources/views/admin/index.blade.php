@@ -65,11 +65,11 @@ Admin Dashboard
                             <div class="m-widget24">
                                 <div class="m-widget24__item">
                                     <h4 class="m-widget24__title">
-                                        Units
+                                        Buildings
                                     </h4>
                                     <br>
                                     <span class="m-widget24__stats m--font-info">
-                                        {{ $units->count() }}
+                                        {{ $buildings->count() }}
                                     </span>
                                     <div class="m--space-10"></div>
                                     <div class="progress m-progress--sm">
@@ -93,11 +93,11 @@ Admin Dashboard
                             <div class="m-widget24">
                                 <div class="m-widget24__item">
                                     <h4 class="m-widget24__title">
-                                        Vehicles
+                                        Apartments
                                     </h4>
                                     <br>
                                     <span class="m-widget24__stats m--font-danger">
-                                        {{ $vehicles->count() }}
+                                        {{ $apartments->count() }}
                                     </span>
                                     <div class="m--space-10"></div>
                                     <div class="progress m-progress--sm">

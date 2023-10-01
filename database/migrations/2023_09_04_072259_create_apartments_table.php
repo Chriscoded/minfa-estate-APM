@@ -11,19 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('apartments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tenant_id')->nullable();
-            $table->string('unit_no');
-            $table->string('unit_type');
+            $table->unsignedBigInteger('building_id');
+            $table->string('apartment_no');
+            $table->string('apartment_type');
             $table->string('floor')->nullable();
-            $table->string('block')->nullable();
             $table->string('rent');
             $table->string('paid')->nullable();
             $table->string('balance')->nullable();
             $table->timestamps();
 
             $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->foreign('building_id')->references('id')->on('buildings')->onDelete('cascade');
         });
     }
 
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('apartments');
     }
 };
