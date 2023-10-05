@@ -47,7 +47,7 @@
 						@if(Auth::user()->hasRole('admin'))
                             <tr>
                                 <th>Names</th>
-                                <th>Unit No</th>
+                                <th>Apartment No</th>
                                 <th>Phone</th>
                                 <th>Vehicle</th>
                                 <th>Action</th>
@@ -76,13 +76,13 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{ $tenant->unit_no }}</td>
+                                    <td>{{ $tenant->apartment_no }}</td>
                                     <td>{{ $tenant->phone }}</td>
                                     <td>
-                                        @foreach ($units as $unit)
-                                            @if ($unit->unit_no == $tenant->unit_no)
+                                        @foreach ($apartments as $apartment)
+                                            @if ($apartment->apartment_no == $tenant->apartment_no)
                                                 @foreach ($vehicles as $vehicle)
-                                                    @if ($vehicle->unit_id == $unit->id)
+                                                    @if ($vehicle->apartment_id == $apartment->id)
                                                         {{ $vehicle->registration }}
                                                     @endif
                                                 @endforeach

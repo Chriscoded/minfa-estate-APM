@@ -81,9 +81,11 @@
 								@foreach($apartments as $apartment)
 									<tr>
 										<td>
-                                            @foreach ($tenants as $tenant)
-                                                {{ $tenant->name }} {{ $tenant->lastname }}
-                                            @endforeach
+                                            @if ( $apartment->tenant != null)
+                                                {{ $apartment->tenant->name }} {{ $apartment->tenant->lastname }}
+                                            @endif
+
+
                                         </td>
 										<td>{{ $apartment->apartment_no }}</td>
 										<td>{{ $apartment->apartment_type }}</td>

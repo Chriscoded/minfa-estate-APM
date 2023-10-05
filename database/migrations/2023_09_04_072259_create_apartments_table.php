@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('tenant_id')->nullable();
             $table->unsignedBigInteger('building_id');
-            $table->string('apartment_no');
+            $table->string('apartment_no')->unique();
             $table->string('apartment_type');
             $table->string('floor')->nullable();
             $table->string('rent');

@@ -19,7 +19,12 @@ class Apartment extends Model
         // public function comments(): HasMany
         // {
             return $this->hasOne(Building::class, 'id', 'building_id');
-        // }
+           // }
         // return hasMany(\App\Models\Building::class);
+    }
+    public function tenant()
+    {
+        return $this->hasOne(Tenant::class, 'id', 'tenant_id');
+
     }
 }

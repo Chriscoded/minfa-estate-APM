@@ -29,41 +29,74 @@
                             <div class="form-group m-form__group row">
                                 <div class="col-lg-4">
                                     <label>First Name:</label>
-                                    <input type="text" name="name" class="form-control m-input" value="{{ old('name') }}" required>
+                                    <input type="text" name="name" class="form-control m-input @error('name') is-invalid @enderror" value="{{ old('name') }}" required>
 
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-lg-4">
                                     <label class="">Middle Name:</label>
-                                    <input type="text" name="middlename" class="form-control m-input" value="{{ old('middlename') }}" required>
+                                    <input type="text" name="middlename" class="form-control m-input @error('middlename') is-invalid @enderror" value="{{ old('middlename') }}" required>
 
+                                     @error('middlename')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-lg-4">
                                     <label class="">Last Name:</label>
-                                    <input type="text" name="lastname" class="form-control m-input" value="{{ old('lastname') }}" required>
-
+                                    <input type="text" name="lastname" class="form-control m-input  @error('lastname') is-invalid @enderror" value="{{ old('lastname') }}" required>
+                                    @error('lastname')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
                                 <div class="col-lg-4">
-                                        <label class="">Unit No:</label>
-                                        <select class="form-control m-input" name="unit_no" required>
+                                        <label class="">Apartment No:</label>
+                                        <select class="form-control m-input  @error('apartment_no') is-invalid @enderror" name="apartment_no" required>
                                             <option selected disabled>
-                                                Select Unit
+                                                Select Apartment
                                             </option>
-                                            @foreach ($units as $unit)
-                                                <option value="{{ $unit->unit_no }}">
-                                                    {{ $unit->unit_no }}
+                                            {{-- {{ dd($apartments) }} --}}
+                                            @foreach ($apartments as $apartment)
+                                                <option value="{{ $apartment->apartment_no }}">
+                                                    {{ $apartment->apartment_no }}
                                                 </option>
                                             @endforeach
                                         </select>
+
+                                        @error('apartment_no')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 <div class="col-lg-4">
                                     <label class="">Email:</label>
-                                    <input type="email" name="email" class="form-control m-input"  value="{{ old('email') }}" required>
+                                    <input type="email" name="email" class="form-control m-input @error('email') is-invalid @enderror"  value="{{ old('email') }}" required>
+
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-lg-4">
                                     <label class="">Phone:</label>
-                                    <input type="phone" name="phone" class="form-control m-input" value="{{ old('phone') }}" required>
+                                    <input type="phone" name="phone" class="form-control m-input @error('phone') is-invalid @enderror" value="{{ old('phone') }}" required>
+
+                                    @error('phone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
 

@@ -16,7 +16,7 @@ class ApartmentController extends Controller
     {
         return View('admin.apartments.index')
             ->with('apartments', Apartment::orderBy('created_at', 'desc')->get())
-            ->with('tenants', Tenant::orderBy('created_at', 'desc')->get())
+            ->with('tenant')
             ->with('building');
     }
 

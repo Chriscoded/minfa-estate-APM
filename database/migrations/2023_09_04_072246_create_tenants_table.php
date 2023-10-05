@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->id();
-            $table->string('unit_no');
+            $table->string('apartment_no');
             $table->string('name');
             $table->string('middlename');
             $table->string('lastname');
