@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
+    public function __construct() {
+        $this->middleware('role:admin');
+    }
+
     public function login_form()
     {
         return view('auth.login');

@@ -9,6 +9,10 @@ use App\Models\Vehicle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TenantRegNotificationMail;
+use Illuminate\Support\Facades\Crypt;
 
 class TenantController extends Controller
 {
@@ -45,6 +49,9 @@ class TenantController extends Controller
                 ->withInput();
         } else {
             if (Auth::user()->hasRole('dev') || Auth::user()->hasRole('admin')) {
+                $sendemail = Crypt::encrypt($request->get('email'));
+                $link = url("/tenant/create-account/".$sendemail);
+
                 $tenant = new Tenant();
                 $tenant->name = $request->get('name');
                 $tenant->middlename = $request->get('middlename');
@@ -52,12 +59,24 @@ class TenantController extends Controller
                 $tenant->apartment_no = $request->get('apartment_no');
                 $tenant->email = $request->get('email');
                 $tenant->phone = $request->get('phone');
+                $tenant->link = $link;
                 $tenant->save();
 
                 DB::update("update apartments set tenant_id = '$tenant->id' where apartment_no = ?", [$tenant->apartment_no]);
 
                 // flash()->success('Tenant Registered Successfully');
                 // return back();
+
+                $name =  $tenant->name = $request->get('name') ." ". $tenant->lastname = $request->get('lastname');
+                // $link = "/tenant/create-account/";
+                // logger($link);
+                try{
+                    Mail::to($request->get('email'))->send(new TenantRegNotificationMail($sendemail, $name));
+                }
+                catch(\Throwable $th){
+
+                }
+
                 return back()->with(['type' => 'success','title' => 'Success','message' => 'Tenant Registered Successfully'], 200);
             } else {
                 // flash()->error('Add Tenant fail!, Duplicate email or Invalid credentials');
@@ -99,7 +118,7 @@ class TenantController extends Controller
         // if($request->apartment_no == 'null'){
         //     logger('null');
         // }
-        logger($request);
+        // logger($request);
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return Redirect::to('edit-tenant/' . $id)
@@ -142,9 +161,20 @@ class TenantController extends Controller
     public function destroy($id)
     {
         $tenant = Tenant::where('id', $id)->first();
+
+        DB::update("update apartments set tenant_id = null where apartment_no = ?", [$tenant->apartment_no]);
         $tenant->delete();
         // flash()->success('Tenant Deleted Successfully');
         // return back();
         return back()->with(['type' => 'success','title' => 'Success','message' => 'Tenant Deleted Successfully'], 200);
+    }
+
+    public function create_tenant_account($email){
+        logger($email);
+        // logger($email);
+        $decrypted_email = Crypt::decrypt(urldecode($email));
+        $tenant = Tenant::where('email', $decrypted_email)->first();
+
+        return view('auth.register-tenant', compact('tenant'));
     }
 }

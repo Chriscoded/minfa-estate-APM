@@ -13,6 +13,8 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Tenant\TenantSectController;
+use App\Http\Controllers\Tenant\TenantRentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -121,8 +123,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/update-payment/{id}', [PaymentController::class, 'update']);
     Route::get('/delete-payment/{id}', [PaymentController::class, 'destroy']);
 
+    // Tenant route Area
+    Route::get('/tenant-dash', [TenantSectController::class, 'index']);
+
+    // Tenant rent
+    Route::get('/all-my-rents', [TenantRentsController::class, 'index']);
+    Route::get('/my-new-rent', [TenantRentsController::class, 'new_rent']);
+    Route::post('rent/rent-manually', [TenantRentsController::class, 'store'])->name('pay_manually');
+
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/tenant/create-account/{email}', [TenantController::class, 'create_tenant_account']);

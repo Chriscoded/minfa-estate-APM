@@ -19,7 +19,9 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers, CustomRedirectsUsers {
+        CustomRedirectsUsers::customRedirectPath insteadof AuthenticatesUsers;
+    }
 
     /**
      * Where to redirect users after login.
@@ -37,4 +39,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    protected function authenticated($request, $user)
+    {
+        return redirect($this->customRedirectPath());
+    }
+
 }

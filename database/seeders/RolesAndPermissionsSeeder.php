@@ -32,11 +32,11 @@ class RolesAndPermissionsSeeder extends Seeder
         $userRole->givePermissionTo('read');
         $userRole->givePermissionTo('create');
 
-        $userRole = Role::create(['name' => 'administrator']);
-        $userRole->givePermissionTo('read');
-        $userRole->givePermissionTo('create');
+        // $userRole = Role::create(['name' => 'administrator']);
+        // $userRole->givePermissionTo('read');
+        // $userRole->givePermissionTo('create');
 
-        $userRole = Role::create(['name' => 'Tenant']);
+        $userRole = Role::create(['name' => 'tenant']);
         $userRole->givePermissionTo('read');
         $userRole->givePermissionTo('create');
 
