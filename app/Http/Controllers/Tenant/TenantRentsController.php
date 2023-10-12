@@ -35,8 +35,8 @@ class TenantRentsController extends Controller
             'amount' => 'required'
         ]);
 
-        $user = User::where('tenant_id', Auth::user()->id)->get();
-        dd($tenant);
+        $user = User::where('id', Auth::user()->id)->get();
+        dd($user);
 
         if ($validator->fails()) {
             // logger("failed validation");
@@ -51,13 +51,16 @@ class TenantRentsController extends Controller
                 // logger("User role is dev or admin");
                 $rent = new Rent();
                 $rent->payment_medium = $request->get('payment_medium');
+                $rent->proof = $request->get('proof');
+                $rent->amount = $request->get('amount');
+                $rent->tenant_id = $user->tenant_id;
 
                 if ($request->hasFile('proof')) {
 
                     $file = $request->file('proof');
                     $fileName = "Receipt" . time() . '.' . $file->getClientOriginalExtension();
                     // $fileName = time() . '.' . $request->image->extension();
-                    $file->storeAs('public/payment_proof', $fileName);
+                    $file->storeAs('public/images/payment_proof', $fileName);
 
                     $rent->proof = $fileName;
                 }

@@ -70,12 +70,12 @@ class TenantController extends Controller
                 $name =  $tenant->name = $request->get('name') ." ". $tenant->lastname = $request->get('lastname');
                 // $link = "/tenant/create-account/";
                 // logger($link);
-                try{
+                // try{
                     Mail::to($request->get('email'))->send(new TenantRegNotificationMail($sendemail, $name));
-                }
-                catch(\Throwable $th){
-
-                }
+                // }
+                // catch(\Throwable $th){
+                        //return back()->with(['type' => 'error','title' => 'Error','message' => 'Tenant created, But unable to send notifiction email'], 422);
+                // }
 
                 return back()->with(['type' => 'success','title' => 'Success','message' => 'Tenant Registered Successfully'], 200);
             } else {
@@ -170,7 +170,6 @@ class TenantController extends Controller
     }
 
     public function create_tenant_account($email){
-        logger($email);
         // logger($email);
         $decrypted_email = Crypt::decrypt(urldecode($email));
         $tenant = Tenant::where('email', $decrypted_email)->first();

@@ -38,12 +38,9 @@ class TenantRegNotificationMail extends Mailable
      */
     public function content(): Content
     {
-        // return new Content(
-        //     view: 'view.name',
-        // );
-
-        $email = $this->email;
-        return $this->view('mail.tenant_reg_not_alert', compact("email","name"));
+        return new Content(
+            view: 'mail.tenant_reg_not_alert',
+        );
     }
 
     /**

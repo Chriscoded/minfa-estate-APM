@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('rent', function (Blueprint $table) {
             $table->id();
             $table->string('payment_medium');
-            $table->string('proof');
+            $table->string('proof')->nullable();
             $table->string('amount');
             $table->unsignedBigInteger('tenant_id');
             $table->timestamps();

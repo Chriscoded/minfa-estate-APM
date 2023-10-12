@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -66,10 +67,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $tenant_id = isset($data['tenant_id']) ? $data['tenant_id']: null;
+        // logger($tenant_id);
+        //  dd($tenant_id);
+
         $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'tenant_id' => $data['tenant_id'],
         ]);
 
         $tenantRole = Role::whereName('tenant')->first();
@@ -81,5 +87,16 @@ class RegisterController extends Controller
         $user->assignRole('tenant');
 
         return $user;
+    }
+
+    protected function registered(Request $request, User $user)
+    {
+        if ($user->hasRole('admin')) {
+            return redirect('/admin-dash');
+        } elseif ($user->hasRole('tenant')) {
+            return redirect('/tenant-dash');
+        } else {
+            return redirect(RouteServiceProvider::HOME);
+        }
     }
 }
