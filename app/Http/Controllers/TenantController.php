@@ -27,7 +27,8 @@ class TenantController extends Controller
 
     public function create()
     {
-        $apartments = Apartment::where('tenant_id', null)->get();
+        $apartments = Apartment::where('tenant_id', null)->with('building')->get();
+        // dd($apartments);
         return view('admin.tenants.create', compact('apartments'));
     }
 

@@ -67,7 +67,7 @@
                                             {{-- {{ dd($apartments) }} --}}
                                             @foreach ($apartments as $apartment)
                                                 <option value="{{ $apartment->apartment_no }}">
-                                                    {{ $apartment->apartment_no }}
+                                                    {{ $apartment->apartment_no }} - building {{ $apartment->building->building_name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -122,17 +122,12 @@
                 </div>
                 <!--end::Portlet-->
                 <!--End::Section-->
+                @else
+
+				@endif
             </div>
         </div>
     </div>
-					@else
-
-					@endif
-
-					<!--End::Section-->
-                    </div>
-                </div>
-            </div>
             <!-- end:: Body -->
 
 @endsection

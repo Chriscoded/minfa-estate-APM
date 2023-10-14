@@ -16,11 +16,16 @@ class TenantRentsController extends Controller
 {
     public function index(Request $request)
     {
-        return view('tenant.rent.index');
+        $user = User::where('id', Auth::user()->id)->first();
+        $tenant_id = $user->tenant_id;
+        $rents = Rent::where('tenant_id', $tenant_id)->orderBy('id', 'desc')->get();
+        // dd($rent);
+        return view('tenant.rent.index', compact('rents'));
     }
 
     public function new_rent()
     {
+
         return view('tenant.rent.create');
     }
 
@@ -35,8 +40,8 @@ class TenantRentsController extends Controller
             'amount' => 'required'
         ]);
 
-        $user = User::where('id', Auth::user()->id)->get();
-        dd($user);
+        $user = User::where('id', Auth::user()->id)->first();
+        // dd($user);
 
         if ($validator->fails()) {
             // logger("failed validation");
@@ -49,10 +54,12 @@ class TenantRentsController extends Controller
             // if (Auth::user()->role == 'dev' || Auth::user()->role == 'admin') {
             if (Auth::user()->hasAnyRole('tenant')) {
                 // logger("User role is dev or admin");
+                // dd($user);
                 $rent = new Rent();
                 $rent->payment_medium = $request->get('payment_medium');
                 $rent->proof = $request->get('proof');
                 $rent->amount = $request->get('amount');
+                $rent->period = $request->get('period');
                 $rent->tenant_id = $user->tenant_id;
 
                 if ($request->hasFile('proof')) {

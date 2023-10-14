@@ -49,7 +49,7 @@
         <script src="https://cdn.datatables.net/plug-ins/1.10.21/filtering/row-based/range_dates.js"></script>
 
 
-
+        @stack('css')
 
 	</head>
 	<!-- end::Head -->

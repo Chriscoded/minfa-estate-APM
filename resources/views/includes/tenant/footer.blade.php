@@ -113,6 +113,8 @@
             });
         </script>
     @endif
+
+    @stack('js')
 	</body>
 	<!-- end::Body -->
 </html>

@@ -1,7 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.tenant')
 
+@section('header')
+Pay Rent
+@endsection
 
-@section('content')
+{{-- @section('content')
 
 @push('css')
     <style>
@@ -49,7 +52,7 @@
                             <div class="col-md-6">
                                 <input type="number" name="amount" class="form-control m-input @error('amount') is-invalid @enderror"  value="{{ old('amount') }}" required>
 
-                                @error('payment_medium')
+                                @error('amount')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -103,4 +106,131 @@
         </div>
     </div>
 </div>
+@endsection --}}
+
+
+{{-- /////////////////////////////////////////////////////////////// --}}
+
+@section('content')
+	<div class="m-grid__item m-grid__item--fluid m-wrapper">
+        <!-- BEGIN: Subheader -->
+		<!-- END: Subheader -->
+			<div class="m-content">
+				<!--begin::Portlet-->
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">
+                                    Create Tenant
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                <!--begin::Form-->
+                @if(Auth::user()->hasRole('tenant'))
+                    <form class=" m-portlet__head m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" method="POST" action="{{ route('pay_manually') }}" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="m-portlet__body">
+                            {{-- <div class="form-group m-form__group row"> --}}
+                                <div class="col-lg-8 offset-2 mt-3">
+                                    <label for="payment_medium" >Payment Medium</label>
+                                    <select class="form-control m-input  @error('payment_medium') is-invalid @enderror" name="payment_medium" required>
+                                        <option selected disabled>
+                                            Select Payment Medium
+                                        </option>
+
+                                        <option value="online">Online </option>
+                                        <option value="bank">Bank </option>
+                                        <option value="transfer">Transfer</option>
+                                    </select>
+
+                                    @error('payment_medium')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+
+                                </div>
+                                <div class="col-lg-8 offset-2 mt-3">
+                                    <label class="">Amount:</label>
+                                    <input type="number" name="amount" class="form-control m-input @error('amount') is-invalid @enderror"  value="{{ old('amount') }}" required>
+
+                                @error('amount')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                </div>
+                                <div class="col-lg-8 offset-2 mt-3">
+                                    <label class="">Period:</label>
+                                    <select class="form-control m-input  @error('period') is-invalid @enderror" name="period" required>
+                                        <option selected disabled>
+                                            Select Period
+                                        </option>
+
+                                        <option value="1"> 1 Year </option>
+                                        <option value="2"> 2 Years </option>
+                                        <option value="3">3 Years</option>
+                                        <option value="4">4 Years</option>
+                                        <option value="5">5 Years</option>
+                                    </select>
+                                    @error('period')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            {{-- </div> --}}
+                            {{-- <div class="form-group m-form__group row"> --}}
+                                <div class="col-lg-8 offset-2 mt-3">
+                                    <label class="">Proof of payment:</label>
+                                    <input type="file" name="proof" class="form-control" id="proof" >
+
+
+                                    @error('proof')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            {{-- </div> --}}
+
+                            <div class="col-lg-8 offset-2 mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                                {{-- <button type="reset" class="btn btn-secondary">
+                                    Cancel
+                                </button> --}}
+                            </div>
+                        </div>
+                        {{-- <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                            <div class="m-form__actions m-form__actions--solid">
+                                <div class="row">
+                                    <div class="col-lg-4"></div>
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="btn btn-primary">
+                                            Submit
+                                        </button>
+                                        <button type="reset" class="btn btn-secondary">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <!--end::Portlet-->
+                <!--End::Section-->
+                @else
+
+				@endif
+            </div>
+        </div>
+    </div>
+            <!-- end:: Body -->
+
 @endsection
