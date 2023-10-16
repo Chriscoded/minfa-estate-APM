@@ -5,32 +5,32 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tenant;
-use App\Models\Rent;
+use App\Models\Complain;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 
-
-class TenantRentsController extends Controller
+class TenantComplainsController extends Controller
 {
     public function __construct() {
         // $this->middleware('role:tenant')->only(['staffMethod']);
         $this->middleware('role:tenant');
     }
+    //
     public function index(Request $request)
     {
         $user = User::where('id', Auth::user()->id)->first();
         $tenant_id = $user->tenant_id;
-        $rents = Rent::where('tenant_id', $tenant_id)->orderBy('id', 'desc')->get();
+        $complains = Complain::where('tenant_id', $tenant_id)->orderBy('id', 'desc')->get();
         // dd($rent);
-        return view('tenant.rent.index', compact('rents'));
+        return view('tenant.complains.index', compact('complains'));
     }
 
-    public function new_rent()
+    public function new_complain()
     {
 
-        return view('tenant.rent.create');
+        return view('tenant.complains.create');
     }
 
     public function store(Request $request)
@@ -38,10 +38,7 @@ class TenantRentsController extends Controller
         // logger($request);
         // return back()->with(['type' => 'success','title' => 'Success','message' => 'apartment Registered Successfully'], 200);
         $validator = Validator::make($request->all(), [
-            'payment_medium' => 'required',
-            'proof' => 'required',
-            'period' => 'required',
-            'amount' => 'required'
+            'complain' => 'required',
         ]);
 
         $user = User::where('id', Auth::user()->id)->first();
@@ -50,7 +47,7 @@ class TenantRentsController extends Controller
         if ($validator->fails()) {
             // logger("failed validation");
 
-            return redirect('my-new-rent/')
+            return redirect('my-new-complain/')
                 ->withErrors($validator)
                 ->withInput();
         } else {
@@ -59,34 +56,31 @@ class TenantRentsController extends Controller
             if (Auth::user()->hasAnyRole('tenant')) {
                 // logger("User role is dev or admin");
                 // dd($user);
-                $rent = new Rent();
-                $rent->payment_medium = $request->get('payment_medium');
-                $rent->proof = $request->get('proof');
-                $rent->amount = $request->get('amount');
-                $rent->period = $request->get('period');
+                $rent = new Complain();
+                $rent->complain = $request->get('complain');
                 $rent->tenant_id = $user->tenant_id;
-                $rent->status = 'unconfirmed';
+                $rent->status = 'unsettled';
 
-                if ($request->hasFile('proof')) {
+                if ($request->hasFile('image')) {
 
-                    $file = $request->file('proof');
+                    $file = $request->file('image');
                     $fileName = "Receipt" . time() . '.' . $file->getClientOriginalExtension();
                     // $fileName = time() . '.' . $request->image->extension();
-                    $file->storeAs('public/images/payment_proof', $fileName);
+                    $file->storeAs('public/images/complains', $fileName);
 
-                    $rent->proof = $fileName;
+                    $rent->image = $fileName;
                 }
 
                 $rent->save();
 
                 // logger("saved" . $apartment);
                 // flash()->success('Apartment Registered Successfully');
-                return back()->with(['type' => 'success','title' => 'Success','message' => 'Payment Submitted Successfully'], 200);
+                return back()->with(['type' => 'success','title' => 'Success','message' => 'Complain Submitted Successfully'], 200);
             } else {
                 // flash()->error('Add apartment fail!, Duplicate email or Invalid credentials');
-                return back()->with(['type' => 'error','title' => 'Error','message' => 'Payment failed to submit!'], 422);
+                return back()->with(['type' => 'error','title' => 'Error','message' => 'Complain failed to submit!'], 422);
             }
         }
     }
-}
 
+}

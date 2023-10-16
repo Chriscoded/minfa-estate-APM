@@ -46,6 +46,7 @@
 		<link href="../admin/assets/vendors/general/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
 		<!--end::Base Styles -->
         <link rel="shortcut icon" href="../images/retex1.jpeg" />
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
         <script src="https://cdn.datatables.net/plug-ins/1.10.21/filtering/row-based/range_dates.js"></script>
 
 

@@ -41,7 +41,7 @@ Admin Dashboard
                                     </h4>
                                     <br>
                                     <span class="m-widget24__stats m--font-brand">
-                                        {{-- {{ $tenants->count() }} --}}
+                                        {{ $complains->count() }}
                                     </span>
                                     <div class="m--space-10"></div>
                                     <div class="progress m-progress--sm">
@@ -69,7 +69,7 @@ Admin Dashboard
                                     </h4>
                                     <br>
                                     <span class="m-widget24__stats m--font-info">
-                                        {{-- {{ $buildings->count() }} --}}
+                                        {{ $settled_complains->count() }}
                                     </span>
                                     <div class="m--space-10"></div>
                                     <div class="progress m-progress--sm">
@@ -97,7 +97,7 @@ Admin Dashboard
                                     </h4>
                                     <br>
                                     <span class="m-widget24__stats m--font-danger">
-                                        {{-- {{ $apartments->count() }} --}}
+                                        {{-- {{ $available_apartments->count() }} --}}
                                     </span>
                                     <div class="m--space-10"></div>
                                     <div class="progress m-progress--sm">

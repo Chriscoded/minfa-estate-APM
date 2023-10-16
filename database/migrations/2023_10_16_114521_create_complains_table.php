@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rents', function (Blueprint $table) {
+        Schema::create('complains', function (Blueprint $table) {
             $table->id();
-            $table->string('payment_medium');
-            $table->string('proof')->nullable();
-            $table->string('amount');
-            $table->string('period');
+            $table->string('image')->nullable();
+            $table->longText('complain');
             $table->unsignedBigInteger('tenant_id');
-            $table->enum('status', ['unconfirmed', 'confirmed']);
+            $table->enum('status', ['unsettled', 'settled']);
             $table->timestamps();
 
             $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rents');
+        Schema::dropIfExists('complains');
     }
 };

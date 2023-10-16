@@ -23,7 +23,7 @@
 						</li>
 
 						<li class="m-menu__item" aria-haspopup="true" >
-							<a  href="{{ url('/admin-dash') }}" class="m-menu__link ">
+							<a  href="{{ url('/tenant-dash') }}" class="m-menu__link ">
 								<i class="m-menu__link-icon flaticon-apps"></i>
 								<span class="m-menu__link-title">
 									<span class="m-menu__link-wrap">
@@ -106,7 +106,7 @@
 										</a>
 									</li>
 									<li class="m-menu__item " aria-haspopup="true" >
-										<a  href="{{ url('/my-new-complains') }}" class="m-menu__link ">
+										<a  href="{{ route('my-new-complains') }}" class="m-menu__link ">
 											<i class="m-menu__link-bullet m-menu__link-bullet--dot">
 												<span></span>
 											</i>

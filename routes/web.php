@@ -15,6 +15,8 @@ use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Tenant\TenantSectController;
 use App\Http\Controllers\Tenant\TenantRentsController;
+use App\Http\Controllers\Tenant\TenantComplainsController;
+use App\Http\Controllers\Tenant\TenantApartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,9 +133,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/my-new-rent', [TenantRentsController::class, 'new_rent']);
     Route::post('rent/rent-manually', [TenantRentsController::class, 'store'])->name('pay_manually');
 
+    // Tenant complains
+    Route::get('/all-my-complains', [TenantComplainsController::class, 'index']);
+    Route::get('/my-new-complain', [TenantComplainsController::class, 'new_complain'])->name('my-new-complains');
+    Route::post('complain/report', [TenantComplainsController::class, 'store'])->name('report_complain');
+    //tenant view apartments
+    Route::get('/available-apartments', [TenantApartmentController::class, 'available_apartments'])->name('available-apartments');
+
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/tenant/create-account/{email}', [TenantController::class, 'create_tenant_account']);
+

@@ -1,0 +1,76 @@
+.image-cell {
+    width: 100px; /* Set a fixed width for the td */
+    height: 100px; /* Set a fixed height for the td */
+    padding: 10px; /* Add some padding inside the td */
+}
+
+.image-cell img {
+    width: 100%; /* Make the image fill the td width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove any extra space below the image */
+}
+
+.enlarged-image-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.enlarged-image-container img {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.confirmed{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 15px 5px;
+gap: 10px;
+width: 92px;
+height: 23px;
+left: 747px;
+top: 0px;
+border-radius: 3px;
+height: 15px;
+font-family: 'Lato';
+font-style: normal;
+font-weight: 700;
+font-size: 12px;
+line-height: 15px;
+letter-spacing: 0.016em;
+/* Success */
+background: rgba(36, 179, 20, 0.15);
+color: #24B314;
+}
+
+.unconfirmed{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 15px 5px;
+gap: 10px;
+width: 92px;
+height: 23px;
+left: 747px;
+top: 0px;
+border-radius: 3px;
+height: 15px;
+font-family: 'Lato';
+font-style: normal;
+font-weight: 700;
+font-size: 12px;
+line-height: 15px;
+letter-spacing: 0.016em;
+
+background: rgba(255, 218, 110, 0.16);
+color: #FFDA6E;
+}

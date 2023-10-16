@@ -10,7 +10,7 @@
 @push('css')
 
 <style>
-
+    
 </style>
 
 @endpush
@@ -24,7 +24,7 @@
                 <div class="m-portlet__head-caption">
                     <div class="m-portlet__head-title">
                         <h3 class="m-portlet__head-text">
-                            Rent Paid
+                            Your complains
                         </h3>
                     </div>
                 </div>
@@ -32,10 +32,10 @@
 					<ul class="m-portlet__nav">
 						@if(Auth::user()->hasRole('tenant'))
 							<li class="m-portlet__nav-item">
-								<a href="{{ url('my-new-rent') }}" class="btn btn-primary m-btn  m-btn--custom m-btn--icon m-btn--air">
+								<a href="{{ url('my-new-complain') }}" class="btn btn-primary m-btn  m-btn--custom m-btn--icon m-btn--air">
 									<span>
 										<i class="fa fa-wrench"></i>
-										<span>New Payments</span>
+										<span>New Complain</span>
 									</span>
 								</a>
 							</li>
@@ -50,12 +50,10 @@
 						@if(Auth::user()->hasRole('tenant'))
 							<tr>
 								<th></th>
-								<th>Payment Medium</th>
-                                <th>Amount</th>
-                                <th>Period</th>
-                                <th>Proof</th>
+								<th>Complain message</th>
+                                <th>Complain image</th>
                                 <th>Status</th>
-                                <th>Date paid</th>
+                                <th>Date complained</th>
 							</tr>
 
 
@@ -65,32 +63,29 @@
 					</thead>
 					<tbody>
 						    @if(Auth::user()->hasRole('tenant'))
-								@foreach($rents as $key => $rent )
+								@foreach($complains as $key => $complain )
 									<tr>
                                         <td> {{ $key + 1 }} </td>
 										<td>
-                                            {{ $rent->payment_medium }}
+                                            {{ $complain->complain }}
                                         </td>
-										<td >{{ $rent->amount }}</td>
-
-                                        <td>{{ $rent->period }}</td>
-
+										
                                         <td class="image-cell">
-											<img class="enlarged-image" src="{{ asset('storage/images/payment_proof/' .  $rent->proof) }}" alt="Payment Proof">
+											<img class="enlarged-image" src="{{ asset('storage/images/complains/' .  $complain->image) }}" alt="Complain image">
                                             <div class="enlarged-image-container"></div>
 										</td>
 
-                                        <td> {{--  {{ $rent->status }} --}}
-                                            @if ($rent->status == 'confirmed')
-                                                <div class="confirmed"> Confirmed </div>
+                                        <td> {{--  {{ $complain->status }} --}}
+                                            @if ($complain->status == 'settled')
+                                                <div class="confirmed"> Settled </div>
                                             @endif
-                                            @if ($rent->status == 'unconfirmed')
-                                                <div class="unconfirmed"> Unconfirmed </div>
+                                            @if ($complain->status == 'unsettled')
+                                                <div class="unconfirmed"> Unsettled </div>
                                             @endif
                                         </td>
 
                                         <td>
-                                            {{ $rent->created_at }}
+                                            {{ $complain->created_at }}
                                         </td>
 
 

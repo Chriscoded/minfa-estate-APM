@@ -106,7 +106,7 @@
                 title: "{{ session()->get('title') }}",
                 icon: ("{{ session()->get('type') }}" == 'success') ? "success" : "error",
                 text: "{{ session()->get('message') }}",
-                timer: 3000
+                // timer: 3000
             }).then((value) => {
                 // window.location.assign("/all-units");
                 window.location.reload();
