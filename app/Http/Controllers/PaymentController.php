@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\Rent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentController extends Controller
 {
@@ -111,8 +113,29 @@ class PaymentController extends Controller
     {
         $payment = Payment::where('id', $id)->first();
         $payment->delete();
-        flash()->success('Payment Deleted Successfully');
-        return back();
+        return back()->with(['success' => 'Payment Deleted Successfully'], 200);
+    }
+
+    public function destroy_rent($id)
+    {
+        $payment = Rent::where('id', $id)->first();
+        $filePath = 'public/images/payment_proof/' . $payment->proof; // $filename is the name of the file you saved
+
+        // logger($filePath);
+        // Check if the file exists
+        if (Storage::exists($filePath)) {
+            // Delete the file
+            Storage::delete($filePath);
+        }
+        $payment->delete();
+        return back()->with(['success' => 'Rent Deleted Successfully'], 200);
+    }
+
+    public function all_paid_rents(Request $request)
+    {
+        $rents = Rent::with('tenant')->get();
+        // dd($rents);
+        return view('admin.rent.index', compact('rents'));
     }
 
 }

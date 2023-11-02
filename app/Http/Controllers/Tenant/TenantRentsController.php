@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tenant;
 use App\Models\Rent;
+use App\Models\Apartment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use Carbon\Carbon;
 
 
 class TenantRentsController extends Controller
@@ -37,6 +39,9 @@ class TenantRentsController extends Controller
     {
         // logger($request);
         // return back()->with(['type' => 'success','title' => 'Success','message' => 'apartment Registered Successfully'], 200);
+        // Get the current date and time
+        $currentDateTime = Carbon::now();
+        $expire_date = "";
         $validator = Validator::make($request->all(), [
             'payment_medium' => 'required',
             'proof' => 'required',
@@ -56,9 +61,52 @@ class TenantRentsController extends Controller
         } else {
             // logger("passed validation");
             // if (Auth::user()->role == 'dev' || Auth::user()->role == 'admin') {
+                $previous_expire_date = Carbon::now();
+
             if (Auth::user()->hasAnyRole('tenant')) {
-                // logger("User role is dev or admin");
-                // dd($user);
+
+                //get the last previous confirmed rent expiring date
+
+                // $rent = Rent::where('tenant_id', Auth::user()->tenant_id)->get();
+                $rent = Rent::where(['tenant_id' => Auth::user()->tenant_id, 'status' => "confirmed"])->latest('created_at')->first();
+                // dd($rent);
+                // if($rent->isNotEmpty()) {
+                if(!empty($rent)) {
+                    $previous_expire_date  = $rent->expire_date;
+                    //check if the rent has not expired
+                    if($previous_expire_date < now() ){
+                        //if it has expired add more to the last expire date based on the period one paid for
+                        // dd("expired");
+                        // $expire_date = $previous_expire_date->copy()->addYears($request->get('period'))->toDateString();
+                        $parsedDate = Carbon::parse($previous_expire_date);
+
+                        // Add period years to the retrieved date
+                        $updatedDate = $parsedDate->addYears($request->get('period'));
+
+                        // Format the updated date back to the original format
+                        $expire_date = $updatedDate->format('Y-m-d');
+                        // dd($expire_date);
+                    }
+                    else{
+                         //if it has not expired add more to the last expire date based on the period one paid for
+                        // dd("not expired");
+                        $parsedDate = Carbon::parse($previous_expire_date);
+
+                        // Add period years to the retrieved date
+                        $updatedDate = $parsedDate->addYears($request->get('period'));
+
+                        // Format the updated date back to the original format
+                        $expire_date = $updatedDate->format('Y-m-d');
+                        // dd($expire_date);
+                    }
+                }
+                else{
+                    // that means its first rent of the tenant no previous rent
+                    $expire_date = $currentDateTime->copy()->addYears($request->get('period'))->toDateString();
+
+                    // dd($expire_date);
+                }
+
                 $rent = new Rent();
                 $rent->payment_medium = $request->get('payment_medium');
                 $rent->proof = $request->get('proof');
@@ -66,7 +114,7 @@ class TenantRentsController extends Controller
                 $rent->period = $request->get('period');
                 $rent->tenant_id = $user->tenant_id;
                 $rent->status = 'unconfirmed';
-
+                $rent->expire_date = $expire_date;
                 if ($request->hasFile('proof')) {
 
                     $file = $request->file('proof');
@@ -86,6 +134,21 @@ class TenantRentsController extends Controller
                 // flash()->error('Add apartment fail!, Duplicate email or Invalid credentials');
                 return back()->with(['type' => 'error','title' => 'Error','message' => 'Payment failed to submit!'], 422);
             }
+        }
+    }
+
+    public function rent_amount(Request $request){
+        if ($request->ajax()) {
+            $period = $request->input('period');
+
+            $apartment = Apartment::where('tenant_id', Auth::user()->tenant_id)->latest('created_at')->first();
+
+            $total_amount = $apartment->rent * $period ;
+            // logger($total_amount);
+            $res = [
+                'amount' => $total_amount,
+            ];
+            return json_encode($res);
         }
     }
 }

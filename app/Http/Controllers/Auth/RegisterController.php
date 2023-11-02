@@ -67,7 +67,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        logger($data);
+        // logger($data);
         $tenant_id = isset($data['tenant_id']) ? $data['tenant_id']: null;
         // logger($tenant_id);
         //  dd($tenant_id);
@@ -79,8 +79,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
 
         ]);
-        logger('user');
-        logger($user);
+        // logger('user');
+        // logger($user);
         $tenantRole = Role::whereName('tenant')->first();
         $permissions = Permission::get();
 

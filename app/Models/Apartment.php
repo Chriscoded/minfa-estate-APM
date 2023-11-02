@@ -21,4 +21,6 @@ class Apartment extends Model
         return $this->hasOne(Building::class, 'id', 'building_id');
     }
 
+
+
 }

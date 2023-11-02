@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('proof')->nullable();
             $table->string('amount');
             $table->string('period');
+            $table->date('expire_date');
             $table->unsignedBigInteger('tenant_id');
             $table->enum('status', ['unconfirmed', 'confirmed']);
+            $table->enum('active_expired', ['active', 'expired']);
             $table->timestamps();
 
             $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');

@@ -74,3 +74,10 @@ letter-spacing: 0.016em;
 background: rgba(255, 218, 110, 0.16);
 color: #FFDA6E;
 }
+
+/* [readonly] {
+    background-color: lightgray !important;
+} */
+.form-control[readonly] {
+    background-color: lightgray !important;
+}

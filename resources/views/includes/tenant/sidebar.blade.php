@@ -59,7 +59,7 @@
 												<span></span>
 											</i>
 											<span class="m-menu__link-text">
-												Rent
+												All Paid Rents
 											</span>
 										</a>
 									</li>

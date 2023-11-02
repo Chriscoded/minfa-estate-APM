@@ -125,6 +125,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/update-payment/{id}', [PaymentController::class, 'update']);
     Route::get('/delete-payment/{id}', [PaymentController::class, 'destroy']);
 
+    Route::get('/all-rent-payments', [PaymentController::class, 'all_paid_rents'])->name('all-rent-payments');
+    Route::get('/delete-payment/{id}', [PaymentController::class, 'destroy_rent']);
+
     // Tenant route Area
     Route::get('/tenant-dash', [TenantSectController::class, 'index']);
 
@@ -139,6 +142,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('complain/report', [TenantComplainsController::class, 'store'])->name('report_complain');
     //tenant view apartments
     Route::get('/available-apartments', [TenantApartmentController::class, 'available_apartments'])->name('available-apartments');
+
+    //ajax route
+    Route::get('/rent/amount', [TenantRentsController::class, 'rent_amount'])->name('rent-amount');
 
 });
 

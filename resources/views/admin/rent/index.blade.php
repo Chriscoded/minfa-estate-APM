@@ -1,5 +1,5 @@
 
-@extends('layouts.tenant')
+@extends('layouts.admin')
 
 @section('header')
 
@@ -24,30 +24,15 @@
                 <div class="m-portlet__head-caption">
                     <div class="m-portlet__head-title">
                         <h3 class="m-portlet__head-text">
-                            Rent Paid
+                            All Rent Paid
                         </h3>
                     </div>
                 </div>
-				<div class="m-portlet__head-tools">
-					<ul class="m-portlet__nav">
-						@if(Auth::user()->hasRole('tenant'))
-							<li class="m-portlet__nav-item">
-								<a href="{{ url('my-new-rent') }}" class="btn btn-primary m-btn  m-btn--custom m-btn--icon m-btn--air">
-									<span>
-										<i class="fa fa-wrench"></i>
-										<span>New Payments</span>
-									</span>
-								</a>
-							</li>
-						    <li class="m-portlet__nav-item"></li>
-                        @endif
-					</ul>
-				</div>
 			</div>
 			<div class="m-portlet__body">
 				<table class="table table-bordered table-striped " id="table">
 					<thead class>
-						@if(Auth::user()->hasRole('tenant'))
+						@if(Auth::user()->hasRole('admin'))
 							<tr>
 								<th></th>
 								<th>Payment Medium</th>
@@ -57,6 +42,7 @@
                                 <th>Status</th>
                                 <th>Expiring Date</th>
                                 <th>Date paid</th>
+                                <th>Actions</th>
 							</tr>
 
 
@@ -65,7 +51,7 @@
 						@endif
 					</thead>
 					<tbody>
-						    @if(Auth::user()->hasRole('tenant'))
+						    @if(Auth::user()->hasRole('admin'))
 								@foreach($rents as $key => $rent )
 									<tr>
                                         <td> {{ $key + 1 }} </td>
@@ -98,6 +84,14 @@
                                             {{ $rent->created_at }}
                                         </td>
 
+                                        <td>
+											{{-- <a href="{{ url('edit-/'.$apartment->id) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit ">
+												<i class="fa fa-edit"></i>
+											</a> --}}
+											<a href="{{ url('delete-payment/'.$rent->id) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit ">
+												<i class="fa fa-trash"></i>
+											</a>
+										</td>
 
 									</tr>
 

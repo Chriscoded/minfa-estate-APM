@@ -122,7 +122,7 @@ Pay Rent
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
                                 <h3 class="m-portlet__head-text">
-                                    Create Tenant
+                                    Pay new rent
                                 </h3>
                             </div>
                         </div>
@@ -153,18 +153,8 @@ Pay Rent
 
                                 </div>
                                 <div class="col-lg-8 offset-2 mt-3">
-                                    <label class="">Amount:</label>
-                                    <input type="number" name="amount" class="form-control m-input @error('amount') is-invalid @enderror"  value="{{ old('amount') }}" required>
-
-                                @error('amount')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                                </div>
-                                <div class="col-lg-8 offset-2 mt-3">
                                     <label class="">Period:</label>
-                                    <select class="form-control m-input  @error('period') is-invalid @enderror" name="period" required>
+                                    <select class="form-control m-input  @error('period') is-invalid @enderror" name="period" id="period" required>
                                         <option selected disabled>
                                             Select Period
                                         </option>
@@ -181,6 +171,18 @@ Pay Rent
                                         </span>
                                     @enderror
                                 </div>
+
+                                <div class="col-lg-8 offset-2 mt-3">
+                                    <label class="">Amount:</label>
+                                    <input type="number" name="amount" id="amount" readonly class="form-control m-input @error('amount') is-invalid @enderror"  value="{{ old('amount') }}" required>
+
+                                @error('amount')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                </div>
+
                             {{-- </div> --}}
                             {{-- <div class="form-group m-form__group row"> --}}
                                 <div class="col-lg-8 offset-2 mt-3">
@@ -232,5 +234,29 @@ Pay Rent
         </div>
     </div>
             <!-- end:: Body -->
+        @push('js')
+            <script>
+                $('#period').change(function() {
+                    var period = $('#period').val();
 
+                    $.ajax({
+                        type: "GET",
+                        url: "/rent/amount",
+                        data: { period: period },
+                        dataType: "text",
+                        success: function (response) {
+                            console.log(response);
+                            var result = JSON.parse(response);
+                            console.log(result.amount);
+                            $('#amount').val(result.amount);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(JSON.stringify(jqXHR));
+                            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                        }
+                    });
+
+                });
+            </script>
+        @endpush
 @endsection
