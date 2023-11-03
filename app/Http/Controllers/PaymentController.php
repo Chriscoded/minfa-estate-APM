@@ -133,9 +133,24 @@ class PaymentController extends Controller
 
     public function all_paid_rents(Request $request)
     {
-        $rents = Rent::with('tenant')->get();
+        $rents = Rent::with('tenant')->with('apartment')->get();
         // dd($rents);
         return view('admin.rent.index', compact('rents'));
+    }
+
+    public function accept_rent(Request $request){
+        if ($request->ajax()) {
+            $rent_id = $request->input('id');
+
+            $rent= Rent::where('id', $rent_id)->latest('created_at')->first();
+
+            $rent->status = "confirmed";
+            $rent->save();
+            $res = [
+                'message'=> "rent confirmed"
+            ];
+            return json_encode($res);
+        }
     }
 
 }

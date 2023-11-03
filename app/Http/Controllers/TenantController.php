@@ -37,10 +37,9 @@ class TenantController extends Controller
         // logger($request);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'middlename' => 'required',
             'lastname' => 'required',
             'apartment_no' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:tenants',
             'phone' => 'required',
         ]);
 

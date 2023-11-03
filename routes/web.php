@@ -17,6 +17,7 @@ use App\Http\Controllers\Tenant\TenantSectController;
 use App\Http\Controllers\Tenant\TenantRentsController;
 use App\Http\Controllers\Tenant\TenantComplainsController;
 use App\Http\Controllers\Tenant\TenantApartmentController;
+use App\Http\Controllers\ComplainsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,6 +128,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/all-rent-payments', [PaymentController::class, 'all_paid_rents'])->name('all-rent-payments');
     Route::get('/delete-payment/{id}', [PaymentController::class, 'destroy_rent']);
+    Route::get('/rent/accept', [PaymentController::class, 'accept_rent']);
+    Route::get('/complains', [ComplainsController::class, 'index'])->name('all-tenants-complains');
+    Route::get('/settle-complain', [ComplainsController::class, 'settle_complain']);
+
 
     // Tenant route Area
     Route::get('/tenant-dash', [TenantSectController::class, 'index']);

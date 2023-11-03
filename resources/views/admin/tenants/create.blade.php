@@ -39,9 +39,9 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label class="">Middle Name:</label>
-                                    <input type="text" name="middlename" class="form-control m-input @error('middlename') is-invalid @enderror" value="{{ old('middlename') }}" required>
+                                    <input type="text" name="middlename" class="form-control m-input @error('middlename') is-invalid @enderror" value="{{ old('middlename') }}">
 
-                                     @error('middlename')
+                                    @error('middlename')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

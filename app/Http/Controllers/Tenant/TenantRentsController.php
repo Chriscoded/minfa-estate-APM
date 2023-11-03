@@ -65,8 +65,9 @@ class TenantRentsController extends Controller
 
             if (Auth::user()->hasAnyRole('tenant')) {
 
+                $apartment = Apartment::where('tenant_id', Auth::user()->tenant_id)->first();
                 //get the last previous confirmed rent expiring date
-
+                // dd($apartment);
                 // $rent = Rent::where('tenant_id', Auth::user()->tenant_id)->get();
                 $rent = Rent::where(['tenant_id' => Auth::user()->tenant_id, 'status' => "confirmed"])->latest('created_at')->first();
                 // dd($rent);
@@ -115,6 +116,7 @@ class TenantRentsController extends Controller
                 $rent->tenant_id = $user->tenant_id;
                 $rent->status = 'unconfirmed';
                 $rent->expire_date = $expire_date;
+                $rent->apartment_id = $apartment->id;
                 if ($request->hasFile('proof')) {
 
                     $file = $request->file('proof');

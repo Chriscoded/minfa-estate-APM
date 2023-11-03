@@ -15,7 +15,7 @@ return new class extends Migration
             //apartment_id
             $table->unsignedBigInteger('apartment_id')->after('tenant_id')->nullable();
 
-            $table->foreign('apartment_id')->references('id')->on('rents')->onDelete('cascade');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('rent', function (Blueprint $table) {
+        Schema::table('rents', function (Blueprint $table) {
             $table->dropForeign(['apartment_id']);
             $table->dropColumn('apartment_id');
         });

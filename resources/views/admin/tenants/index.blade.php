@@ -70,7 +70,7 @@
                                                 </div>  --}}
                                                 <div class="col-md-12">
                                                     <div class="m-card-user__details">
-                                                        <span class="m-card-user__name">{{$tenant->name}}  {{$tenant->lastname}}</span>
+                                                        <span class="m-card-user__name">{{$tenant->name}} {{$tenant->middlename}}  {{$tenant->lastname}}</span>
                                                     </div>
                                                 </div>
                                             </div>

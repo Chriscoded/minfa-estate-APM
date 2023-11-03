@@ -23,6 +23,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (auth()->user()->hasRole('admin')) {
+            // return redirect()->action('${App\Http\Controllers\HomeController@index}', ['parameterKey' => 'value']);
+            return redirect('/admin-dash');
+            // return '/admin-dash';
+        } elseif (auth()->user()->hasRole('tenant')) {
+            return redirect('/tenant-dash');
+        }
+        else{
+            return view('home');
+        }
+
     }
 }

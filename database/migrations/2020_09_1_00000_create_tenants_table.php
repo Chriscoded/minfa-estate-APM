@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('apartment_no');
             $table->string('name');
-            $table->string('middlename');
+            $table->string('middlename')->nullable();
             $table->string('lastname');
             $table->string('email');
             $table->string('phone');
