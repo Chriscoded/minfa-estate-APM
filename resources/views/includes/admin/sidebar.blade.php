@@ -618,7 +618,7 @@
                         </li> --}}
 
 
-                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+                        {{-- <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">
 							<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 								<i class="m-menu__link-icon fa fa-copy"></i>
 								<span class="m-menu__link-text">
@@ -658,7 +658,7 @@
 									</li>
 								</ul>
 							</div>
-                        </li>
+                        </li> --}}
 
 
                         <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">

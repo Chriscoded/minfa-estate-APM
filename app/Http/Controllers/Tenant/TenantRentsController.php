@@ -24,7 +24,7 @@ class TenantRentsController extends Controller
     {
         $user = User::where('id', Auth::user()->id)->first();
         $tenant_id = $user->tenant_id;
-        $rents = Rent::where('tenant_id', $tenant_id)->orderBy('id', 'desc')->get();
+        $rents = Rent::where('tenant_id', $tenant_id)->orderBy('id', 'desc')->with('tenant')->with('apartment')->get();
         // dd($rent);
         return view('tenant.rent.index', compact('rents'));
     }

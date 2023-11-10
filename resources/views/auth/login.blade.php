@@ -10,6 +10,10 @@
             font-size: xx-large;
             font-family: inherit;
         }
+        .card{
+            background-color:#3490dc;
+            color: #fefefe;
+        }
     </style>
 @endpush
 <div class="container">
@@ -64,7 +68,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-light">
                                     {{ __('Login') }}
                                 </button>
 
