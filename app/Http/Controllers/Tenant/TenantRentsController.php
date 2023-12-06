@@ -35,6 +35,14 @@ class TenantRentsController extends Controller
         return view('tenant.rent.create');
     }
 
+
+    public function viewreceipt($id){
+        // logger( $id);
+        $rent = Rent::where('id', $id)->orderBy('id', 'desc')->with('tenant')->with('apartment')->first();
+        // dd($rent);
+        return view('tenant.rent.receipt', compact('rent'));
+    }
+
     public function store(Request $request)
     {
         // logger($request);

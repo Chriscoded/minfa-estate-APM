@@ -128,7 +128,8 @@ class PaymentController extends Controller
             Storage::delete($filePath);
         }
         $payment->delete();
-        return back()->with(['success' => 'Rent Deleted Successfully'], 200);
+        // return back()->with(['success' => 'Rent Deleted Successfully'], 200);
+        return back()->with(['type' => 'success','title' => 'Success','message' => 'Rent Deleted Successfully'], 200);
     }
 
     public function all_paid_rents(Request $request)

@@ -47,6 +47,14 @@
 		<!--end::Base Styles -->
         <link rel="shortcut icon" href="../images/retex1.jpeg" />
         <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
+        <style>
+            .m-form .form-control-label, .m-form label {
+                font-weight: 500;
+                font-size: 1.3rem;
+            }
+
+
+</style>
         <script src="https://cdn.datatables.net/plug-ins/1.10.21/filtering/row-based/range_dates.js"></script>
 
 

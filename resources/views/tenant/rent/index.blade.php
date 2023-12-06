@@ -9,21 +9,7 @@
 
 @push('css')
 
-<style>
-    .blank{
-    border-bottom : thin solid black;
-    }
-    .box{
-    border : thin solid black;
-    padding : 5px;
-    }
-    @media print {
-        .page-break {page-break-before: always;}
-    }
-    div {
-    font-size : 12px;
-    }
-</style>
+    <link href="../css/receipt.css" rel="stylesheet" type="text/css" />
 
 @endpush
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -111,17 +97,20 @@
                                             {{ $rent->created_at }}
                                         </td>
 
-                                        <td>
-                                            {{-- <button class="btn btn-primary"> Print</button> --}}
-                                            <button class="btn btn-primary viewDetails"
-                                                data-target="#viewReceiptModal_{{ $rent->id }}" data-toggle="modal"
-                                                style="cursor: pointer" data-reference="{{ $rent->id }}" id="viewInvoiceDetailsBtn"
-                                                onclick="preventReload(event)">
-                                               Receipt
-                                            </button>
-                                        </td>
+                                        @if ($rent->created_at == "confirmed")
+                                            <td>
+                                                {{-- <button class="btn btn-primary"> Print</button> --}}
+                                                <a class="btn btn-primary viewDetails"
+                                                    href="{{ route('receipt', $rent->id) }}"
+                                                    style="cursor: pointer" data-reference="{{ $rent->id }}" id="viewInvoiceDetailsBtn"
+                                                    onclick="preventReload(event)">
+                                                Receipt
+                                                </a>
+                                            </td>
 
-
+                                            @else
+                                            <td>No receipt until its confirmed</td>
+                                        @endif
 									</tr>
 
 								@endforeach
@@ -138,11 +127,11 @@
 <!-- end:: Body -->
 
 {{-- {{ dd($rents) }} --}}
-@foreach ($rents as $key => $rent)
+{{-- @foreach ($rents as $key => $rent)
     <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade"
         id="viewReceiptModal_{{ $rent->id }}" role="dialog" tabindex="-1">
         <div class="modal-dialog" role="document">
-            <div class="modal-content" id="printThis">
+            <div class="modal-content">
                 <button type="button" class="close align-items-right" id="invoice_modal_close_btn"
                     style="justify-content: right;display: flex;"data-dismiss="modal" data-bs-dismiss="modal"
                     aria-label="Close">
@@ -151,60 +140,13 @@
 
                 <div class="modal-body" id="printThis">
 
-                    <div ng-app="rentReceipt" ng-controller="rentController as ctrl">
-                        <div class="container">
-                        <!--   each receipt -->
-                        <!--   header -->
-                            <div class="box" ng-class="{'page-break' : $index%3 == 0}" ng-repeat="receipt in ctrl.receitps.range">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <h3 style="color: #5867dd">Minfa Estate</h3>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="row">
-                                            <div class="col-lg-3">No.</div>
-                                            <div class="col-lg-8">{{ 1000+$key }}</div>
-                                            <div class=""></div>
-                                            <div class="col-lg-3">Date.</div>
-                                            <div class="col-lg-8">{{$rent->created_at}}</div>
-                                            <div class=""></div>
-                                            <div class="col-lg-3">Month. </div>
-                                            <div class="col-lg-8 ">{{ \Carbon\Carbon::parse($rent->created_at)->format('F') }}</div>
-                                            <div class="col-lg-2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--   body -->
-                                <hr>
-                                <div class="row">
-                                    <div class="col-lg-4">Received from :</div><div class="col-lg-7 blank">{{ $rent->tenant->name }} {{ $rent->tenant->middlename }} {{ $rent->tenant->lastname }}</div>
-                                    <div class="col-lg-4">Rental Address :</div><div class="col-lg-7 blank">{{ \App\Models\Building::where('id', $rent->apartment->building_id)->first()->building_address }}</div>
-                                    <div class="col-lg-4">Building name :</div><div class="col-lg-7 blank">{{ \App\Models\Building::where('id', $rent->apartment->building_id)->first()->building_name }}</div>
-                                    <div class="col-lg-4">Apartment no :</div><div class="col-lg-7 blank">{{ $rent->apartment->apartment_no }}</div>
-                                    <div class="col-lg-4">Payment Amount :</div><div class="col-lg-7 blank">{{ $rent->amount }}</div>
-                                    <div class="col-lg-4">Received by :</div><div class="col-lg-7 blank">Minfa Estate</div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                </div>
-                                <div class="col-lg-4 box mt-3">
-                                    <h6>Signature : <h6>
-                                    <img width=60 height=30 src="{{ asset('images/signature_prev_ui.png') }}" alt="" />
 
-                                </div>
-
-                            </div>
-                            <button class="btn btn-primary mt-2 print" style="cursor: pointer; float:right" >
-                                Print
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-@endforeach
+@endforeach --}}
 
 @push('js')
     <script>
@@ -228,7 +170,25 @@
             // $('.delete-btn').hide();
             $('.print').hide();
             var $printElement = document.getElementById("printThis");
-            printElement($printElement);
+            // var content = document.getElementById("printThis").innerHTML;
+            printElement($printElement)
+            // Create an iframe
+            // var iframe = document.createElement('iframe');
+            // iframe.style.display = 'none';
+            // document.body.appendChild(iframe);
+
+            // // Write the content into the iframe
+            // iframe.contentDocument.write('<html><head><title>Receipt</title></head><body>');
+            // iframe.contentDocument.write(content);
+            // iframe.contentDocument.write('</body></html>');
+            // iframe.contentDocument.close(); // Close the document opened with document.write
+
+            // // Print the iframe content
+            // iframe.contentWindow.print();
+
+            // // Remove the iframe from the DOM
+            // document.body.removeChild(iframe);
+
             enableUnprintableArea();
             });
 

@@ -18,6 +18,7 @@ use App\Http\Controllers\Tenant\TenantRentsController;
 use App\Http\Controllers\Tenant\TenantComplainsController;
 use App\Http\Controllers\Tenant\TenantApartmentController;
 use App\Http\Controllers\ComplainsController;
+use App\Http\Controllers\ExpensesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,13 +125,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('show-payment/{id}', [PaymentController::class, 'show']);
     Route::get('/edit-payment/{id}', [PaymentController::class, 'edit']);
     Route::post('/update-payment/{id}', [PaymentController::class, 'update']);
-    Route::get('/delete-payment/{id}', [PaymentController::class, 'destroy']);
+    // Route::get('/delete-payment/{id}', [PaymentController::class, 'destroy']);
 
     Route::get('/all-rent-payments', [PaymentController::class, 'all_paid_rents'])->name('all-rent-payments');
     Route::get('/delete-payment/{id}', [PaymentController::class, 'destroy_rent']);
     Route::get('/rent/accept', [PaymentController::class, 'accept_rent']);
+
     Route::get('/complains', [ComplainsController::class, 'index'])->name('all-tenants-complains');
     Route::get('/settle-complain', [ComplainsController::class, 'settle_complain']);
+
+    //EXPENSES
+    Route::get('/expenses', [ExpensesController::class, 'index']);
+    Route::get('/expenses/new', [ExpensesController::class, 'create'])->name('new-expense');
+    Route::post('/expenses/new', [ExpensesController::class, 'store'])->name('new-expense');
+    Route::get('/delete-expense/{id}', [ExpensesController::class, 'destroy']);
 
 
     // Tenant route Area
@@ -150,7 +158,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     //ajax route
     Route::get('/rent/amount', [TenantRentsController::class, 'rent_amount'])->name('rent-amount');
-
+    Route::get('/viewreceipt/{id}', [TenantRentsController::class, 'viewreceipt'])->name('receipt');
 });
 
 Auth::routes();

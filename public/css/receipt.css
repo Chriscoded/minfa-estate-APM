@@ -1,0 +1,14 @@
+
+.blank{
+    border-bottom : thin solid black;
+    }
+    .box{
+    border : thin solid black;
+    padding : 5px;
+    }
+    @media print {
+        .page-break {page-break-before: always;}
+    }
+    div {
+    font-size : 12px;
+    }

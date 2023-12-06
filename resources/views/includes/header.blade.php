@@ -14,6 +14,38 @@
     <link rel=stylesheet href='../frontend/css/style-core.css' type=text/css media=all>
     <link rel=stylesheet href='../frontend/css/logisco-style-custom.css' type=text/css media=all>
 
+    <style>
+        .m-form .form-control-label, .m-form label {
+            font-weight: 500;
+            font-size: 1.3rem;
+        }
+
+        .m-aside-menu .m-menu__nav>.m-menu__item>.m-menu__heading .m-menu__link-text, .m-aside-menu .m-menu__nav>.m-menu__item>.m-menu__link .m-menu__link-text {
+            font-weight: 500;
+            font-size: 1.30rem;
+            text-transform: initial;
+        }
+
+        .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 0.5rem;
+            font-family: inherit;
+            font-weight: 500;
+            line-height: 1.2;
+            color: inherit;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-size: 17px;
+            font-weight: 500;
+            font-family: Poppins;
+            -ms-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
 </head>
 <body class="home page-template-default page page-id-2039 gdlr-core-body logisco-body logisco-body-front logisco-full  logisco-with-sticky-navigation  logisco-blockquote-style-2 gdlr-core-link-to-lightbox">
 
